@@ -1,0 +1,17 @@
+.todo-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 8px;
+  }
+}
+
+.todo-form-card {
+  margin: 16px 0;
+}
