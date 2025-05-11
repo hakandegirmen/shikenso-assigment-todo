@@ -13,6 +13,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,6 +21,8 @@ import { TodoListComponent } from './components/todo-list/todo-list.component';
 import { TodoItemComponent } from './components/todo-item/todo-item.component';
 import { TodoFormComponent } from './components/todo-form/todo-form.component';
 import { TodoFilterComponent } from './components/todo-filter/todo-filter.component';
+import { TodoSearchComponent } from './components/todo-search/todo-search.component';
+import { TodoSortComponent } from './components/todo-sort/todo-sort.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +31,8 @@ import { TodoFilterComponent } from './components/todo-filter/todo-filter.compon
     TodoItemComponent,
     TodoFormComponent,
     TodoFilterComponent,
+    TodoSearchComponent,
+    TodoSortComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,6 +49,7 @@ import { TodoFilterComponent } from './components/todo-filter/todo-filter.compon
     MatDatepickerModule,
     MatNativeDateModule,
     MatIconModule,
+    MatButtonToggleModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,0 +1,20 @@
+<mat-form-field appearance="outline" class="search-field">
+  <mat-label>Search</mat-label>
+  <input
+    matInput
+    type="text"
+    [ngModel]="searchTerm"
+    (ngModelChange)="onSearch($event)"
+    placeholder="Search todos"
+  />
+  <mat-icon matPrefix>search</mat-icon>
+  <button
+    *ngIf="searchTerm"
+    matSuffix
+    mat-icon-button
+    (click)="clearSearch()"
+    aria-label="Clear search"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-form-field>

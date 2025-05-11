@@ -3,7 +3,36 @@
   margin: 0 auto;
   padding: 16px;
 
+  .filters-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 16px 0;
+    gap: 16px;
+  }
+
   .todos {
     margin-top: 24px;
+  }
+
+  .no-results {
+    text-align: center;
+    color: rgba(0, 0, 0, 0.54);
+    padding: 24px;
+  }
+}
+
+.filters-container {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+
+  app-todo-filter,
+  app-todo-search,
+  app-todo-sort {
+    flex: 1;
+    min-width: 200px;
   }
 }

@@ -85,8 +85,17 @@ export class DateService {
   /**
    * Converts a Date object to API-friendly string format
    */
-  toApiString(date: Date | null): string | null {
-    return date ? date.toISOString() : null;
+  toApiString(date: Date | string | null): string | null {
+    if (!date) return null;
+
+    // If it's already an ISO string, return it as is
+    if (typeof date === 'string' && date.includes('T')) {
+      return date;
+    }
+
+    // Otherwise, convert to Date and then to ISO string
+    const dateObj = typeof date === 'string' ? new Date(date) : date;
+    return dateObj.toISOString();
   }
 
   // Convert API date string to Date object
@@ -97,5 +106,10 @@ export class DateService {
     const date = new Date(dateString);
     const userTimezoneOffset = date.getTimezoneOffset() * 60000;
     return new Date(date.getTime() + userTimezoneOffset);
+  }
+
+  toDisplayString(date: string | null): string {
+    if (!date) return '';
+    return new Date(date).toLocaleDateString();
   }
 }

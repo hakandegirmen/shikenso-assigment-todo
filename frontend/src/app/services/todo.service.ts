@@ -29,6 +29,7 @@ export class TodoService {
   }
 
   updateTodo(id: number, todo: Todo): Observable<Todo> {
+    console.log('Updating todo:', todo);
     const todoToSend = {
       ...todo,
       due_date: this.dateService.toApiString(todo.due_date as Date),

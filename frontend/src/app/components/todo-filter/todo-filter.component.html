@@ -1,1 +1,14 @@
-<p>todo-filter works!</p>
+<div class="filter-container">
+  <mat-button-toggle-group
+    [value]="currentFilter"
+    [hideSingleSelectionIndicator]="true"
+  >
+    <mat-button-toggle
+      *ngFor="let filter of filters"
+      [value]="filter.value"
+      (change)="setFilter(filter.value)"
+    >
+      {{ filter.label }} ({{ counts[filter.value] }})
+    </mat-button-toggle>
+  </mat-button-toggle-group>
+</div>

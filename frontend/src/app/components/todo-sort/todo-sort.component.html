@@ -1,0 +1,17 @@
+<mat-button-toggle-group [hideSingleSelectionIndicator]="true">
+  <mat-button-toggle
+    value="none"
+    [checked]="true"
+    (change)="onSortChange('none')"
+  >
+    Default
+  </mat-button-toggle>
+
+  <mat-button-toggle value="asc" (change)="onSortChange('asc')">
+    Due Date ↑
+  </mat-button-toggle>
+
+  <mat-button-toggle value="desc" (change)="onSortChange('desc')">
+    Due Date ↓
+  </mat-button-toggle>
+</mat-button-toggle-group>

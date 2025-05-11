@@ -1,13 +1,31 @@
 <div class="todo-list-container">
   <app-todo-form (todoSubmitted)="onTodoSubmitted($event)"></app-todo-form>
 
+  <div class="filters-container">
+    <app-todo-filter
+      [counts]="filterCounts"
+      (filterChange)="onFilterChange($event)"
+    ></app-todo-filter>
+
+    <app-todo-search
+      [searchTerm]="searchTerm"
+      (searchChange)="onSearch($event)"
+    ></app-todo-search>
+
+    <app-todo-sort (sortChange)="onSortChange($event)"></app-todo-sort>
+  </div>
+
   <div class="todos">
     <app-todo-item
-      *ngFor="let todo of todos"
+      *ngFor="let todo of filteredTodos"
       [todo]="todo"
       (todoUpdated)="onTodoUpdated($event)"
       (todoDeleted)="onTodoDeleted($event)"
     >
     </app-todo-item>
+  </div>
+
+  <div *ngIf="filteredTodos.length === 0" class="no-results">
+    <p>No todos found</p>
   </div>
 </div>

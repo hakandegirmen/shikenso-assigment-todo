@@ -1,0 +1,17 @@
+.filter-container {
+  display: flex;
+  justify-content: center;
+  margin: 16px 0;
+
+  mat-button-toggle-group {
+    border-radius: 20px;
+
+    mat-button-toggle {
+      min-width: 100px;
+
+      ::ng-deep .mat-button-toggle-label-content {
+        line-height: 36px;
+      }
+    }
+  }
+}
