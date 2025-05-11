@@ -1,34 +1,21 @@
 // src/app/components/todo-main/todo-bar/todo-search/todo-search.component.ts
 import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormControl } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatIconModule } from '@angular/material/icon';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-todo-search',
+  standalone: true,
+  imports: [CommonModule, FormsModule],
   templateUrl: './todo-search.component.html',
-  styleUrls: ['./todo-search.component.scss'],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatIconModule,
-  ],
 })
 export class TodoSearchComponent {
   @Output() searchChange = new EventEmitter<string>();
+  searchTerm = '';
 
-  searchControl = new FormControl('');
-
-  constructor() {
-    this.searchControl.valueChanges
-      .pipe(debounceTime(300), distinctUntilChanged())
-      .subscribe((value) => {
-        this.searchChange.emit(value || '');
-      });
+  onSearch(event: Event) {
+    const value = (event.target as HTMLInputElement).value;
+    this.searchTerm = value;
+    this.searchChange.emit(value);
   }
 }

@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
+import { TodoMainComponent } from './components/todo-main/todo-main.component';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  standalone: false,
-  styleUrl: './app.component.scss'
+  standalone: true,
+  imports: [TodoMainComponent],
 })
 export class AppComponent {
-  title = 'frontend';
+  title = 'Todo App';
 }

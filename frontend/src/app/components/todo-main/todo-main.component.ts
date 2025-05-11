@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { TodoService } from '../../services/todo.service';
-import { FilterCriteria } from './todo-bar/todo-bar.component';
+import { FilterCriteria } from './todo-bar/todo-filter/todo-filter.component';
 import { Todo } from '../../models/todo';
 import { CommonModule } from '@angular/common';
 import { TodoBarComponent } from './todo-bar/todo-bar.component';

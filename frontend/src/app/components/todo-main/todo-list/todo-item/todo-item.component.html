@@ -1,79 +1,119 @@
 <!-- src/app/components/todo-main/todo-list/todo-item/todo-item.component.html -->
-<mat-card class="todo-item" [class.expanded]="isExpanded">
+<div
+  class="bg-white rounded-lg shadow-sm mb-3 overflow-hidden"
+  [class.border-l-4]="todo?.completed"
+  [class.border-green-500]="todo?.completed"
+>
   <!-- Display Mode Header -->
-  <mat-card-header *ngIf="mode === 'display'" (click)="toggleExpand()">
-    <mat-checkbox
-      [checked]="todo?.completed"
-      (change)="onStatusChange($event)"
-      (click)="$event.stopPropagation()"
+  <div
+    *ngIf="mode === 'display'"
+    class="p-4 flex items-center space-x-4 hover:bg-gray-50 cursor-pointer"
+    (click)="toggleExpand()"
+  >
+    <!-- Checkbox -->
+    <div class="flex items-center">
+      <input
+        type="checkbox"
+        [checked]="todo?.completed"
+        (change)="onStatusChange($event)"
+        (click)="$event.stopPropagation()"
+        class="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+      />
+    </div>
+
+    <!-- Title -->
+    <span
+      class="flex-grow text-gray-900"
+      [class.line-through]="todo?.completed"
     >
       {{ todo?.title }}
-    </mat-checkbox>
-    <span class="spacer"></span>
-    <button mat-icon-button (click)="startEdit(); $event.stopPropagation()">
-      <mat-icon>edit</mat-icon>
-    </button>
-  </mat-card-header>
+    </span>
+
+    <!-- Action Buttons -->
+    <div class="flex space-x-2">
+      <button
+        (click)="startEdit(); $event.stopPropagation()"
+        class="p-2 text-gray-400 hover:text-gray-600"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"
+          />
+        </svg>
+      </button>
+    </div>
+  </div>
 
   <!-- Edit/Create Mode Form -->
   <form
     [formGroup]="todoForm"
     (ngSubmit)="onSubmit()"
     *ngIf="mode !== 'display' || isExpanded"
+    class="p-4 space-y-4 bg-gray-50"
   >
-    <mat-card-content>
-      <mat-form-field appearance="outline" *ngIf="mode !== 'display'">
-        <mat-label>Title</mat-label>
-        <input
-          matInput
-          formControlName="title"
-          placeholder="Enter todo title"
-        />
-        <mat-error *ngIf="todoForm.get('title')?.errors?.['required']">
-          Title is required
-        </mat-error>
-      </mat-form-field>
+    <!-- Title Input -->
+    <div *ngIf="mode !== 'display'" class="space-y-1">
+      <label class="block text-sm font-medium text-gray-700">Title</label>
+      <input
+        type="text"
+        formControlName="title"
+        placeholder="Enter todo title"
+        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+      />
+      <p
+        *ngIf="todoForm.get('title')?.errors?.['required']"
+        class="text-red-500 text-sm"
+      >
+        Title is required
+      </p>
+    </div>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Description</mat-label>
-        <textarea
-          matInput
-          formControlName="description"
-          [readonly]="mode === 'display'"
-          placeholder="Enter description"
-        >
-        </textarea>
-      </mat-form-field>
+    <!-- Description Input -->
+    <div class="space-y-1">
+      <label class="block text-sm font-medium text-gray-700">Description</label>
+      <textarea
+        formControlName="description"
+        [readonly]="mode === 'display'"
+        placeholder="Enter description"
+        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+      >
+      </textarea>
+    </div>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Due Date</mat-label>
-        <input
-          matInput
-          [matDatepicker]="picker"
-          formControlName="due_date"
-          [readonly]="mode === 'display'"
-        />
-        <mat-datepicker-toggle
-          *ngIf="mode !== 'display'"
-          matIconSuffix
-          [for]="picker"
-        >
-        </mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
-    </mat-card-content>
+    <!-- Due Date Input -->
+    <div class="space-y-1">
+      <label class="block text-sm font-medium text-gray-700">Due Date</label>
+      <input
+        type="date"
+        formControlName="due_date"
+        [readonly]="mode === 'display'"
+        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+      />
+    </div>
 
     <!-- Action Buttons -->
-    <mat-card-actions *ngIf="mode !== 'display'">
-      <button mat-button type="button" (click)="cancelEdit()">Cancel</button>
+    <div class="flex justify-end space-x-2 pt-4">
       <button
-        mat-raised-button
-        color="primary"
+        *ngIf="mode === 'edit'"
+        type="button"
+        (click)="onDelete()"
+        class="px-4 py-2 text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-md"
+      >
+        Delete
+      </button>
+      <button
+        *ngIf="mode !== 'display'"
         type="submit"
         [disabled]="!todoForm.valid"
+        class="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-md disabled:opacity-50"
       >
-        {{ mode === "create" ? "Add" : "Update" }} Todo
+        {{ mode === "create" ? "Add" : "Save" }}
       </button>
-    </mat-card-actions>
+    </div>
   </form>
-</mat-card>
+</div>

@@ -1,19 +1,27 @@
-import { Component, EventEmitter, Output, Input } from '@angular/core';
+// src/app/components/todo-main/todo-bar/todo-filter/todo-filter.component.ts
+import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MatBadgeModule } from '@angular/material/badge';
+
+export type FilterType = 'all' | 'active' | 'completed';
+export type SortDirection = 'asc' | 'desc' | 'none';
+
+export interface FilterCriteria {
+  searchTerm: string;
+  filter: FilterType;
+  sortDirection: SortDirection;
+}
 
 @Component({
   selector: 'app-todo-filter',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './todo-filter.component.html',
-  styleUrls: ['./todo-filter.component.scss'],
-  imports: [CommonModule, MatButtonToggleModule, MatBadgeModule],
 })
 export class TodoFilterComponent {
-  @Input() currentFilter: 'all' | 'active' | 'completed' = 'all';
-  @Output() filterChange = new EventEmitter<'all' | 'active' | 'completed'>();
+  @Output() filterChange = new EventEmitter<FilterType>();
+  currentFilter: FilterType = 'all';
 
-  onFilterChange(filter: 'all' | 'active' | 'completed') {
+  setFilter(filter: FilterType) {
     this.currentFilter = filter;
     this.filterChange.emit(filter);
   }

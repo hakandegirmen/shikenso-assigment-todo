@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { TodoMainComponent } from './components/todo-main/todo-main.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

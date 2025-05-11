@@ -1,20 +1,33 @@
-<div class="filter-container">
-  <mat-button-toggle-group
-    [value]="currentFilter"
-    [hideSingleSelectionIndicator]="true"
+<!-- src/app/components/todo-main/todo-bar/todo-filter/todo-filter.component.html -->
+<div class="flex rounded-lg overflow-hidden border border-gray-200">
+  <button
+    (click)="setFilter('all')"
+    [class.bg-blue-500]="currentFilter === 'all'"
+    [class.text-white]="currentFilter === 'all'"
+    [class.bg-white]="currentFilter !== 'all'"
+    [class.text-gray-700]="currentFilter !== 'all'"
+    class="flex-1 px-4 py-2 text-sm font-medium hover:bg-blue-50 transition-colors"
   >
-    <mat-button-toggle
-      value="all"
-      [checked]="true"
-      (change)="onFilterChange('all')"
-    >
-      All
-    </mat-button-toggle>
-    <mat-button-toggle value="active" (change)="onFilterChange('active')">
-      Active
-    </mat-button-toggle>
-    <mat-button-toggle value="completed" (change)="onFilterChange('completed')">
-      Completed
-    </mat-button-toggle>
-  </mat-button-toggle-group>
+    All
+  </button>
+  <button
+    (click)="setFilter('active')"
+    [class.bg-blue-500]="currentFilter === 'active'"
+    [class.text-white]="currentFilter === 'active'"
+    [class.bg-white]="currentFilter !== 'active'"
+    [class.text-gray-700]="currentFilter !== 'active'"
+    class="flex-1 px-4 py-2 text-sm font-medium hover:bg-blue-50 transition-colors border-x border-gray-200"
+  >
+    Active
+  </button>
+  <button
+    (click)="setFilter('completed')"
+    [class.bg-blue-500]="currentFilter === 'completed'"
+    [class.text-white]="currentFilter === 'completed'"
+    [class.bg-white]="currentFilter !== 'completed'"
+    [class.text-gray-700]="currentFilter !== 'completed'"
+    class="flex-1 px-4 py-2 text-sm font-medium hover:bg-blue-50 transition-colors"
+  >
+    Completed
+  </button>
 </div>

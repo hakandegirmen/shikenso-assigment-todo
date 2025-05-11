@@ -1,30 +1,35 @@
+// src/app/components/todo-main/todo-bar/todo-bar.component.ts
 import { Component, EventEmitter, Output } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import {
-  animate,
+  trigger,
   state,
   style,
   transition,
-  trigger,
+  animate,
 } from '@angular/animations';
-import { Todo } from '../../../models/todo';
-import { CommonModule } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { TodoFilterComponent } from './todo-filter/todo-filter.component';
 import { TodoSearchComponent } from './todo-search/todo-search.component';
 import { TodoSortComponent } from './todo-sort/todo-sort.component';
 import { TodoItemComponent } from '../todo-list/todo-item/todo-item.component';
-
-export interface FilterCriteria {
-  searchTerm: string;
-  filter: 'all' | 'active' | 'completed';
-  sortDirection: 'asc' | 'desc' | 'none';
-}
+import { Todo } from '../../../models/todo';
+import {
+  FilterCriteria,
+  FilterType,
+  SortDirection,
+} from './todo-filter/todo-filter.component';
 
 @Component({
   selector: 'app-todo-bar',
+  standalone: true,
+  imports: [
+    CommonModule,
+    TodoFilterComponent,
+    TodoSearchComponent,
+    TodoSortComponent,
+    TodoItemComponent,
+  ],
   templateUrl: './todo-bar.component.html',
-  styleUrls: ['./todo-bar.component.scss'],
   animations: [
     trigger('expandCollapse', [
       state(
@@ -45,15 +50,6 @@ export interface FilterCriteria {
       transition('collapsed <=> expanded', [animate('200ms ease-in-out')]),
     ]),
   ],
-  imports: [
-    CommonModule,
-    MatButtonModule,
-    MatIconModule,
-    TodoFilterComponent,
-    TodoSearchComponent,
-    TodoSortComponent,
-    TodoItemComponent,
-  ],
 })
 export class TodoBarComponent {
   @Output() criteriaChanged = new EventEmitter<FilterCriteria>();
@@ -72,7 +68,7 @@ export class TodoBarComponent {
     this.criteriaChanged.emit(this.criteria);
   }
 
-  onFilterChange(filter: 'all' | 'active' | 'completed') {
+  onFilterChange(filter: FilterType) {
     this.criteria = { ...this.criteria, filter };
     this.criteriaChanged.emit(this.criteria);
   }
@@ -88,6 +84,6 @@ export class TodoBarComponent {
 
   onTodoSubmitted(todo: Todo) {
     this.todoAdded.emit(todo);
-    this.isFormExpanded = false; // Auto-collapse after submission
+    this.isFormExpanded = false;
   }
 }

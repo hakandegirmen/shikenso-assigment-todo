@@ -1,18 +1,23 @@
-<div class="todo-list">
-  <app-todo-item
-    *ngFor="let todo of todos"
-    [todo]="todo"
-    mode="display"
-    (todoUpdated)="onTodoUpdated($event)"
-    (todoDeleted)="onTodoDeleted($event)"
-  >
-  </app-todo-item>
+<!-- src/app/components/todo-main/todo-list/todo-list.component.html -->
+<div class="space-y-4">
+  <!-- Todo Items -->
+  <div class="divide-y divide-gray-100">
+    <app-todo-item
+      *ngFor="let todo of todos"
+      [todo]="todo"
+      mode="display"
+      (todoUpdated)="onTodoUpdated($event)"
+      (todoDeleted)="onTodoDeleted($event)"
+      class="block"
+    >
+    </app-todo-item>
+  </div>
 
+  <!-- No Todos State -->
   <app-no-todos
     *ngIf="todos.length === 0"
-    [message]="getNoTodosMessage()"
-    [icon]="getNoTodosIcon()"
-    [showAddHint]="shouldShowAddHint()"
+    [message]="'No todos yet'"
+    [showAddHint]="true"
   >
   </app-no-todos>
 </div>
