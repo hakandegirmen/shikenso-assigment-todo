@@ -1,21 +1,22 @@
 <!-- src/app/components/todo-main/todo-bar/todo-sort/todo-sort.component.html -->
 <button
   (click)="toggleSort()"
-  class="inline-flex items-center px-4 py-2 border border-gray-200 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-blue-500"
+  class="cursor-pointer inline-flex items-center px-4 py-2 border border-gray-200 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-blue-500"
 >
   <span>Sort by date</span>
-  <svg
-    *ngIf="currentSort !== 'none'"
+  <ng-icon
+    *ngIf="currentSort === 'none'"
+    name="heroChevronUpDown"
     class="ml-2 h-4 w-4"
-    [class.rotate-180]="currentSort === 'desc'"
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 20 20"
-    fill="currentColor"
-  >
-    <path
-      fill-rule="evenodd"
-      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-      clip-rule="evenodd"
-    />
-  </svg>
+  ></ng-icon>
+  <ng-icon
+    *ngIf="currentSort === 'asc'"
+    name="heroChevronUp"
+    class="ml-2 h-4 w-4"
+  ></ng-icon>
+  <ng-icon
+    *ngIf="currentSort === 'desc'"
+    name="heroChevronDown"
+    class="ml-2 h-4 w-4"
+  ></ng-icon>
 </button>

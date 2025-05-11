@@ -1,11 +1,24 @@
 // src/app/components/todo-main/todo-bar/todo-sort/todo-sort.component.ts
 import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import {
+  heroChevronUp,
+  heroChevronDown,
+  heroChevronUpDown,
+} from '@ng-icons/heroicons/outline';
 
 @Component({
   selector: 'app-todo-sort',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NgIconComponent],
+  providers: [
+    provideIcons({
+      heroChevronUp,
+      heroChevronDown,
+      heroChevronUpDown,
+    }),
+  ],
   templateUrl: './todo-sort.component.html',
 })
 export class TodoSortComponent {

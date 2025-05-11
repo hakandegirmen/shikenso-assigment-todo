@@ -8,12 +8,25 @@ import {
   Validators,
 } from '@angular/forms';
 import { Todo } from '../../../../models/todo';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import { heroPencilSquare } from '@ng-icons/heroicons/outline';
+import {
+  ButtonComponent,
+  CheckboxComponent,
+} from '../../../../shared/components';
 
 @Component({
   selector: 'app-todo-item',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    NgIconComponent,
+    ButtonComponent,
+    CheckboxComponent,
+  ],
   templateUrl: './todo-item.component.html',
+  providers: [provideIcons({ heroPencilSquare })],
 })
 export class TodoItemComponent {
   @Input() todo?: Todo;
@@ -49,9 +62,12 @@ export class TodoItemComponent {
     this.isExpanded = true;
   }
 
-  onStatusChange(event: any) {
+  onStatusChange(checked: boolean) {
     if (this.todo) {
-      const updatedTodo = { ...this.todo, completed: event.target.checked };
+      const updatedTodo: Todo = {
+        ...this.todo,
+        completed: checked,
+      };
       this.todoUpdated.emit(updatedTodo);
     }
   }

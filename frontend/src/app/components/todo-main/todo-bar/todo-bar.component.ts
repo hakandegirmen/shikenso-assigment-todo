@@ -18,17 +18,21 @@ import {
   FilterType,
   SortDirection,
 } from './todo-filter/todo-filter.component';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import { heroPlus } from '@ng-icons/heroicons/outline';
 
 @Component({
   selector: 'app-todo-bar',
   standalone: true,
   imports: [
     CommonModule,
+    NgIconComponent,
     TodoFilterComponent,
     TodoSearchComponent,
     TodoSortComponent,
     TodoItemComponent,
   ],
+  providers: [provideIcons({ heroPlus })],
   templateUrl: './todo-bar.component.html',
   animations: [
     trigger('expandCollapse', [

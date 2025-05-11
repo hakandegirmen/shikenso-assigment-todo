@@ -6,43 +6,51 @@
   </div>
 
   <!-- Controls Row -->
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-    <app-todo-filter (filterChange)="onFilterChange($event)"> </app-todo-filter>
-
-    <app-todo-search (searchChange)="onSearchChange($event)"> </app-todo-search>
-
-    <app-todo-sort (sortChange)="onSortChange($event)"> </app-todo-sort>
+  <div class="flex flex-col md:grid md:grid-cols-3 gap-4">
+    <div class="flex gap-4 md:col-span-2">
+      <div class="flex-grow">
+        <app-todo-search
+          (searchChange)="onSearchChange($event)"
+        ></app-todo-search>
+      </div>
+      <div class="flex-shrink-0">
+        <app-todo-sort (sortChange)="onSortChange($event)"></app-todo-sort>
+      </div>
+    </div>
+    <div class="md:col-span-1 flex align-middle items-center">
+      <app-todo-filter
+        (filterChange)="onFilterChange($event)"
+      ></app-todo-filter>
+    </div>
   </div>
 
-  <!-- Add Todo Button -->
-  <div class="flex justify-center">
-    <button
-      (click)="toggleForm()"
-      class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
-    >
-      <svg
-        [class.rotate-45]="isFormExpanded"
-        class="w-6 h-6 transition-transform duration-200"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 20 20"
-        fill="currentColor"
+  <!-- Add Todo Button Row -->
+</div>
+<div class="p-4 pt-0 mt-1">
+  <div class="bg-blue-500 hover:bg-blue-600 shadow-sm rounded-b-lg">
+    <div class="flex justify-center">
+      <div
+        (click)="toggleForm()"
+        class="w-full max-w-2xl flex justify-center items-center py-2 cursor-pointer rounded-lg transition-colors group"
       >
-        <path
-          fill-rule="evenodd"
-          d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-          clip-rule="evenodd"
-        />
-      </svg>
-    </button>
-  </div>
-
-  <!-- Create Todo Form -->
-  <div
-    *ngIf="isFormExpanded"
-    class="transition-all duration-200 ease-in-out"
-    [@expandCollapse]="isFormExpanded ? 'expanded' : 'collapsed'"
-  >
-    <app-todo-item mode="create" (todoCreated)="onTodoSubmitted($event)">
-    </app-todo-item>
+        <div class="flex items-center gap-2 text-white">
+          <ng-icon
+            name="heroPlus"
+            [class.rotate-45]="isFormExpanded"
+            class="transition-transform duration-200"
+            size="32"
+          ></ng-icon>
+        </div>
+      </div>
+    </div>
+    <!-- Create Todo Form -->
+    <div
+      *ngIf="isFormExpanded"
+      class="transition-all duration-200 ease-in-out"
+      [@expandCollapse]="isFormExpanded ? 'expanded' : 'collapsed'"
+    >
+      <app-todo-item mode="create" (todoCreated)="onTodoSubmitted($event)">
+      </app-todo-item>
+    </div>
   </div>
 </div>

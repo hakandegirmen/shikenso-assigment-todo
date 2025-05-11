@@ -1,35 +1,16 @@
 <!-- src/app/components/todo-main/todo-bar/todo-filter/todo-filter.component.html -->
 <div class="flex rounded-lg overflow-hidden border border-gray-200">
   <button
-    (click)="setFilter('all')"
-    [class.bg-blue-500]="currentFilter === 'all'"
-    [class.text-white]="currentFilter === 'all'"
-    [class.bg-white]="currentFilter !== 'all'"
-    [class.text-gray-700]="currentFilter !== 'all'"
-    class="flex-1 px-4 py-2 flex items-center justify-center gap-2 hover:bg-blue-50 transition-colors"
+    *ngFor="let filter of filters"
+    (click)="setFilter(filter)"
+    [ngClass]="[
+      'cursor-pointer flex-1 px-4 py-2 flex items-center justify-center gap-2 hover:bg-blue-600 transition-colors',
+      currentFilter === filter
+        ? 'bg-blue-500 text-white'
+        : 'bg-white text-gray-700 hover:text-white',
+      filter === 'active' ? 'border-x border-gray-200' : ''
+    ]"
   >
-    <ng-icon name="heroListBullet" class="h-5 w-5"></ng-icon>
-  </button>
-
-  <button
-    (click)="setFilter('active')"
-    [class.bg-blue-500]="currentFilter === 'active'"
-    [class.text-white]="currentFilter === 'active'"
-    [class.bg-white]="currentFilter !== 'active'"
-    [class.text-gray-700]="currentFilter !== 'active'"
-    class="flex-1 px-4 py-2 flex items-center justify-center gap-2 hover:bg-blue-50 transition-colors border-x border-gray-200"
-  >
-    <ng-icon name="heroClock" class="h-5 w-5"></ng-icon>
-  </button>
-
-  <button
-    (click)="setFilter('completed')"
-    [class.bg-blue-500]="currentFilter === 'completed'"
-    [class.text-white]="currentFilter === 'completed'"
-    [class.bg-white]="currentFilter !== 'completed'"
-    [class.text-gray-700]="currentFilter !== 'completed'"
-    class="flex-1 px-4 py-2 flex items-center justify-center gap-2 hover:bg-blue-50 transition-colors"
-  >
-    <ng-icon name="heroCheck" class="h-5 w-5"></ng-icon>
+    <ng-icon [name]="getIconName(filter)" class="h-5 w-5"></ng-icon>
   </button>
 </div>

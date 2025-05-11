@@ -1,6 +1,6 @@
 <!-- src/app/components/todo-main/todo-list/todo-item/todo-item.component.html -->
 <div
-  class="bg-white rounded-lg shadow-sm mb-3 overflow-hidden"
+  class="bg-white rounded-lg shadow-sm mb-3 overflow-hidden group"
   [class.border-l-4]="todo?.completed"
   [class.border-green-500]="todo?.completed"
 >
@@ -10,42 +10,32 @@
     class="p-4 flex items-center space-x-4 hover:bg-gray-50 cursor-pointer"
     (click)="toggleExpand()"
   >
-    <!-- Checkbox -->
-    <div class="flex items-center">
-      <input
-        type="checkbox"
-        [checked]="todo?.completed"
-        (change)="onStatusChange($event)"
+    <div class="flex items-center gap-2">
+      <app-checkbox
+        [checked]="todo?.completed || false"
+        (checkedChange)="onStatusChange($event)"
         (click)="$event.stopPropagation()"
-        class="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
       />
+      <span
+        class="flex-grow text-gray-900"
+        [class.line-through]="todo?.completed"
+      >
+        {{ todo?.title }}
+      </span>
     </div>
 
-    <!-- Title -->
-    <span
-      class="flex-grow text-gray-900"
-      [class.line-through]="todo?.completed"
-    >
-      {{ todo?.title }}
-    </span>
-
-    <!-- Action Buttons -->
-    <div class="flex space-x-2">
-      <button
-        (click)="startEdit(); $event.stopPropagation()"
-        class="p-2 text-gray-400 hover:text-gray-600"
+    <div class="ml-auto">
+      <app-button
+        variant="icon"
+        iconSize="lg"
+        (clicked)="startEdit(); $event.stopPropagation()"
+        class="invisible group-hover:visible"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-5 w-5"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-        >
-          <path
-            d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"
-          />
-        </svg>
-      </button>
+        <ng-icon
+          name="heroPencilSquare"
+          class="h-6 w-6 text-gray-600 hover:text-blue-600"
+        ></ng-icon>
+      </app-button>
     </div>
   </div>
 
@@ -98,22 +88,16 @@
 
     <!-- Action Buttons -->
     <div class="flex justify-end space-x-2 pt-4">
-      <button
+      <app-button
         *ngIf="mode === 'edit'"
-        type="button"
-        (click)="onDelete()"
-        class="px-4 py-2 text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-md"
+        variant="danger"
+        (clicked)="onDelete()"
       >
         Delete
-      </button>
-      <button
-        *ngIf="mode !== 'display'"
-        type="submit"
-        [disabled]="!todoForm.valid"
-        class="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-md disabled:opacity-50"
-      >
+      </app-button>
+      <app-button variant="primary" type="submit" [disabled]="!todoForm.valid">
         {{ mode === "create" ? "Add" : "Save" }}
-      </button>
+      </app-button>
     </div>
   </form>
 </div>

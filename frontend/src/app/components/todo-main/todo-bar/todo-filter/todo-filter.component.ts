@@ -25,10 +25,21 @@ export interface FilterCriteria {
   providers: [provideIcons({ heroListBullet, heroClock, heroCheck })],
 })
 export class TodoFilterComponent {
-  @Output() filterChange = new EventEmitter<FilterType>();
-  currentFilter: FilterType = 'all';
+  @Output() filterChange = new EventEmitter<'all' | 'active' | 'completed'>();
+  currentFilter: 'all' | 'active' | 'completed' = 'all';
 
-  setFilter(filter: FilterType) {
+  filters: ('all' | 'active' | 'completed')[] = ['all', 'active', 'completed'];
+
+  getIconName(filter: 'all' | 'active' | 'completed'): string {
+    const icons = {
+      all: 'heroListBullet',
+      active: 'heroClock',
+      completed: 'heroCheck',
+    };
+    return icons[filter];
+  }
+
+  setFilter(filter: 'all' | 'active' | 'completed'): void {
     this.currentFilter = filter;
     this.filterChange.emit(filter);
   }
