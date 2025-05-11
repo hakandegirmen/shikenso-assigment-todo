@@ -1,0 +1,18 @@
+<div class="todo-list">
+  <app-todo-item
+    *ngFor="let todo of todos"
+    [todo]="todo"
+    mode="display"
+    (todoUpdated)="onTodoUpdated($event)"
+    (todoDeleted)="onTodoDeleted($event)"
+  >
+  </app-todo-item>
+
+  <app-no-todos
+    *ngIf="todos.length === 0"
+    [message]="getNoTodosMessage()"
+    [icon]="getNoTodosIcon()"
+    [showAddHint]="shouldShowAddHint()"
+  >
+  </app-no-todos>
+</div>

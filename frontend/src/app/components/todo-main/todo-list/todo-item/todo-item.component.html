@@ -1,0 +1,79 @@
+<!-- src/app/components/todo-main/todo-list/todo-item/todo-item.component.html -->
+<mat-card class="todo-item" [class.expanded]="isExpanded">
+  <!-- Display Mode Header -->
+  <mat-card-header *ngIf="mode === 'display'" (click)="toggleExpand()">
+    <mat-checkbox
+      [checked]="todo?.completed"
+      (change)="onStatusChange($event)"
+      (click)="$event.stopPropagation()"
+    >
+      {{ todo?.title }}
+    </mat-checkbox>
+    <span class="spacer"></span>
+    <button mat-icon-button (click)="startEdit(); $event.stopPropagation()">
+      <mat-icon>edit</mat-icon>
+    </button>
+  </mat-card-header>
+
+  <!-- Edit/Create Mode Form -->
+  <form
+    [formGroup]="todoForm"
+    (ngSubmit)="onSubmit()"
+    *ngIf="mode !== 'display' || isExpanded"
+  >
+    <mat-card-content>
+      <mat-form-field appearance="outline" *ngIf="mode !== 'display'">
+        <mat-label>Title</mat-label>
+        <input
+          matInput
+          formControlName="title"
+          placeholder="Enter todo title"
+        />
+        <mat-error *ngIf="todoForm.get('title')?.errors?.['required']">
+          Title is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Description</mat-label>
+        <textarea
+          matInput
+          formControlName="description"
+          [readonly]="mode === 'display'"
+          placeholder="Enter description"
+        >
+        </textarea>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Due Date</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          formControlName="due_date"
+          [readonly]="mode === 'display'"
+        />
+        <mat-datepicker-toggle
+          *ngIf="mode !== 'display'"
+          matIconSuffix
+          [for]="picker"
+        >
+        </mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </mat-card-content>
+
+    <!-- Action Buttons -->
+    <mat-card-actions *ngIf="mode !== 'display'">
+      <button mat-button type="button" (click)="cancelEdit()">Cancel</button>
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="!todoForm.valid"
+      >
+        {{ mode === "create" ? "Add" : "Update" }} Todo
+      </button>
+    </mat-card-actions>
+  </form>
+</mat-card>

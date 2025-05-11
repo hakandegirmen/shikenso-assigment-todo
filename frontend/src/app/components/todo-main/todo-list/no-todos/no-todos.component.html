@@ -1,0 +1,7 @@
+<div class="no-todos">
+  <mat-icon [class.large]="true">{{ icon }}</mat-icon>
+  <h3>{{ message }}</h3>
+  <p *ngIf="showAddHint">
+    Click the <mat-icon>add</mat-icon> button above to add a new todo
+  </p>
+</div>

@@ -1,0 +1,16 @@
+<div class="todo-main">
+  <app-todo-bar
+    (criteriaChanged)="onCriteriaChanged($event)"
+    (todoAdded)="onTodoAdded($event)"
+  >
+  </app-todo-bar>
+
+  <div class="todo-content">
+    <app-todo-list
+      [todos]="(filteredTodos$ | async) || []"
+      (todoUpdated)="onTodoUpdated($event)"
+      (todoDeleted)="onTodoDeleted($event)"
+    >
+    </app-todo-list>
+  </div>
+</div>

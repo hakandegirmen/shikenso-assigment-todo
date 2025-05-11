@@ -1,0 +1,31 @@
+<div class="todo-bar">
+  <!-- Title Row -->
+  <div class="title-row">
+    <h1>TODO LIST</h1>
+  </div>
+
+  <!-- Controls Row -->
+  <div class="controls-row">
+    <app-todo-filter (filterChange)="onFilterChange($event)"> </app-todo-filter>
+
+    <app-todo-search (searchChange)="onSearchChange($event)"> </app-todo-search>
+
+    <app-todo-sort (sortChange)="onSortChange($event)"> </app-todo-sort>
+  </div>
+
+  <!-- Form Toggle Row -->
+  <div class="form-toggle-row">
+    <button mat-fab color="primary" (click)="toggleForm()">
+      <mat-icon>{{ isFormExpanded ? "remove" : "add" }}</mat-icon>
+    </button>
+  </div>
+
+  <!-- Expandable Form -->
+  <div
+    [@expandCollapse]="isFormExpanded ? 'expanded' : 'collapsed'"
+    class="form-container"
+  >
+    <app-todo-item mode="create" (todoCreated)="onTodoSubmitted($event)">
+    </app-todo-item>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+<div class="filter-container">
+  <mat-button-toggle-group
+    [value]="currentFilter"
+    [hideSingleSelectionIndicator]="true"
+  >
+    <mat-button-toggle
+      value="all"
+      [checked]="true"
+      (change)="onFilterChange('all')"
+    >
+      All
+    </mat-button-toggle>
+    <mat-button-toggle value="active" (change)="onFilterChange('active')">
+      Active
+    </mat-button-toggle>
+    <mat-button-toggle value="completed" (change)="onFilterChange('completed')">
+      Completed
+    </mat-button-toggle>
+  </mat-button-toggle-group>
+</div>

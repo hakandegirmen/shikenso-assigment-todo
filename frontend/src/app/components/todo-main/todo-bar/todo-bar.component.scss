@@ -1,0 +1,55 @@
+.todo-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+
+  .title-row {
+    text-align: center;
+    margin-bottom: 1rem;
+
+    h1 {
+      margin: 0;
+      font-size: 1.5rem;
+      font-weight: 500;
+    }
+  }
+
+  .controls-row {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+
+    app-todo-filter,
+    app-todo-search,
+    app-todo-sort {
+      flex: 1;
+      min-width: 200px;
+    }
+  }
+
+  .form-toggle-row {
+    display: flex;
+    justify-content: center;
+    margin: 1rem 0;
+
+    button {
+      transition: transform 0.2s ease;
+
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+  }
+
+  .form-container {
+    background: #f5f5f5;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-top: 1rem;
+  }
+}
