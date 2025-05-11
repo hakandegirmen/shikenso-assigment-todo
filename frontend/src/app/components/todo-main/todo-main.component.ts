@@ -10,7 +10,7 @@ import { TodoListComponent } from './todo-list/todo-list.component';
 @Component({
   selector: 'app-todo-main',
   templateUrl: './todo-main.component.html',
-  styleUrls: ['./todo-main.component.scss'],
+  standalone: true,
   imports: [CommonModule, TodoBarComponent, TodoListComponent],
 })
 export class TodoMainComponent implements OnInit {

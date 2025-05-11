@@ -6,28 +6,30 @@
     [class.text-white]="currentFilter === 'all'"
     [class.bg-white]="currentFilter !== 'all'"
     [class.text-gray-700]="currentFilter !== 'all'"
-    class="flex-1 px-4 py-2 text-sm font-medium hover:bg-blue-50 transition-colors"
+    class="flex-1 px-4 py-2 flex items-center justify-center gap-2 hover:bg-blue-50 transition-colors"
   >
-    All
+    <ng-icon name="heroListBullet" class="h-5 w-5"></ng-icon>
   </button>
+
   <button
     (click)="setFilter('active')"
     [class.bg-blue-500]="currentFilter === 'active'"
     [class.text-white]="currentFilter === 'active'"
     [class.bg-white]="currentFilter !== 'active'"
     [class.text-gray-700]="currentFilter !== 'active'"
-    class="flex-1 px-4 py-2 text-sm font-medium hover:bg-blue-50 transition-colors border-x border-gray-200"
+    class="flex-1 px-4 py-2 flex items-center justify-center gap-2 hover:bg-blue-50 transition-colors border-x border-gray-200"
   >
-    Active
+    <ng-icon name="heroClock" class="h-5 w-5"></ng-icon>
   </button>
+
   <button
     (click)="setFilter('completed')"
     [class.bg-blue-500]="currentFilter === 'completed'"
     [class.text-white]="currentFilter === 'completed'"
     [class.bg-white]="currentFilter !== 'completed'"
     [class.text-gray-700]="currentFilter !== 'completed'"
-    class="flex-1 px-4 py-2 text-sm font-medium hover:bg-blue-50 transition-colors"
+    class="flex-1 px-4 py-2 flex items-center justify-center gap-2 hover:bg-blue-50 transition-colors"
   >
-    Completed
+    <ng-icon name="heroCheck" class="h-5 w-5"></ng-icon>
   </button>
 </div>
