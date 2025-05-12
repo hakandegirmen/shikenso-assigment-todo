@@ -29,6 +29,7 @@ import {
   CheckboxComponent,
 } from '../../../../shared/components';
 import { DateService } from '../../../../services/date.service';
+import { DatePipe } from '@angular/common';
 
 type TodoItemMode = 'create' | 'edit' | 'display';
 
@@ -41,6 +42,7 @@ type TodoItemMode = 'create' | 'edit' | 'display';
     NgIconComponent,
     ButtonComponent,
     CheckboxComponent,
+    DatePipe,
   ],
   templateUrl: './todo-item.component.html',
   providers: [
@@ -78,8 +80,19 @@ export class TodoItemComponent {
 
   ngOnInit() {
     if (this.todo) {
-      this.todoForm.patchValue(this.todo);
+      const formattedDate = this.todo.due_date
+        ? this.formatDateForInput(new Date(this.todo.due_date))
+        : null;
+
+      this.todoForm.patchValue({
+        ...this.todo,
+        due_date: formattedDate,
+      });
     }
+  }
+
+  private formatDateForInput(date: Date): string {
+    return date.toISOString().split('T')[0];
   }
 
   toggleExpand() {
@@ -93,7 +106,14 @@ export class TodoItemComponent {
 
   cancelEdit() {
     if (this.todo) {
-      this.todoForm.patchValue(this.todo);
+      const formattedDate = this.todo.due_date
+        ? this.formatDateForInput(new Date(this.todo.due_date))
+        : null;
+
+      this.todoForm.patchValue({
+        ...this.todo,
+        due_date: formattedDate,
+      });
       this.todoForm.markAsPristine();
       this.todoForm.markAsUntouched();
     }
@@ -112,7 +132,6 @@ export class TodoItemComponent {
 
   onSubmit() {
     if (this.mode === 'create' || this.mode === 'edit') {
-      // Mark all fields as touched to trigger validation messages
       Object.keys(this.todoForm.controls).forEach((key) => {
         const control = this.todoForm.get(key);
         control?.markAsTouched();
@@ -121,10 +140,18 @@ export class TodoItemComponent {
 
     if (this.todoForm.valid) {
       const formValue = this.todoForm.value;
+
+      const submissionData = {
+        ...formValue,
+        due_date: formValue.due_date
+          ? new Date(formValue.due_date).toISOString()
+          : null,
+      };
+
       if (this.mode === 'create') {
-        this.todoCreated.emit(formValue);
+        this.todoCreated.emit(submissionData);
       } else if (this.mode === 'edit' && this.todo) {
-        this.todoUpdated.emit({ ...this.todo, ...formValue });
+        this.todoUpdated.emit({ ...this.todo, ...submissionData });
       }
     }
   }
@@ -142,7 +169,6 @@ export class TodoItemComponent {
       this.isDeleteConfirming = false;
     } else {
       this.isDeleteConfirming = true;
-      // Auto-reset after 3 seconds if not clicked
       setTimeout(() => {
         this.isDeleteConfirming = false;
       }, 3000);
@@ -150,14 +176,12 @@ export class TodoItemComponent {
   }
 
   get formattedDueDate(): string {
-    // In edit mode, use the form value
     if (this.mode === 'edit' || this.mode === 'create') {
       const formDate = this.todoForm.get('due_date')?.value;
       return this.dateService.formatForDisplay(
         formDate ? new Date(formDate) : null
       );
     }
-    // In display mode, use the todo value
     return this.dateService.formatForDisplay(
       this.todo?.due_date ? new Date(this.todo.due_date) : null
     );
@@ -169,11 +193,9 @@ export class TodoItemComponent {
 
   onCheckboxChange(checked: boolean) {
     if (this.mode === 'edit') {
-      // In edit mode, update the form and mark it dirty
       this.todoForm.patchValue({ completed: checked });
       this.todoForm.markAsDirty();
     } else {
-      // In display mode, update immediately
       this.onStatusChange(checked);
     }
   }
@@ -185,13 +207,10 @@ export class TodoItemComponent {
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
-    // Only proceed if we're in delete confirming state
     if (!this.isDeleteConfirming) return;
 
-    // Get the click target as an HTML element
     const target = event.target as HTMLElement;
 
-    // Check if the click was outside our delete confirmation buttons
     const isDeleteButton = target.closest('[data-delete-action]');
     if (!isDeleteButton) {
       this.isDeleteConfirming = false;

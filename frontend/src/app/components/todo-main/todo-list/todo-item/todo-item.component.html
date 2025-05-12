@@ -90,7 +90,7 @@
           (clicked)="cancelDelete($event)"
           class="visible w-16 h-8 flex items-center justify-center rounded-md cursor-pointer bg-success/80 hover:bg-success/90"
         >
-          <span class="text-sm font-medium text-success whitespace-nowrap">
+          <span class="text-sm font-medium text-light whitespace-nowrap">
             KEEP
           </span>
         </app-button>
@@ -113,7 +113,7 @@
           </ng-container>
           <span
             *ngIf="isDeleteConfirming"
-            class="text-sm font-medium text-error whitespace-nowrap"
+            class="text-sm font-medium text-light whitespace-nowrap"
           >
             DELETE?
           </span>
