@@ -39,8 +39,8 @@
         [disabled]="!todoForm.valid"
         [class]="
           isExpanded
-            ? 'visible bg-green-100 hover:bg-green-200'
-            : 'invisible group-hover:visible bg-green-100 hover:bg-green-200'
+            ? 'visible w-8 h-8 flex items-center justify-center rounded-md cursor-pointer bg-green-100 hover:bg-green-200'
+            : 'invisible group-hover:visible w-8 h-8 flex items-center justify-center rounded-md cursor-pointer bg-green-100 hover:bg-green-200'
         "
       >
         <ng-icon name="heroCheck" size="24" class="text-green-700"></ng-icon>
@@ -54,8 +54,8 @@
         "
         [class]="
           isExpanded
-            ? 'visible bg-blue-100 hover:bg-blue-200'
-            : 'invisible group-hover:visible bg-blue-100 hover:bg-blue-200'
+            ? 'visible w-8 h-8 flex items-center justify-center rounded-md cursor-pointer bg-blue-100 hover:bg-blue-200'
+            : 'invisible group-hover:visible w-8 h-8 flex items-center justify-center rounded-md cursor-pointer bg-blue-100 hover:bg-blue-200'
         "
       >
         <ng-icon
@@ -71,8 +71,8 @@
         (clicked)="onDeleteClick($event)"
         [class]="
           isExpanded
-            ? 'visible bg-red-100 hover:bg-red-200'
-            : 'invisible group-hover:visible bg-red-100 hover:bg-red-200'
+            ? 'visible w-8 h-8 flex items-center justify-center rounded-md cursor-pointer bg-red-100 hover:bg-red-200'
+            : 'invisible group-hover:visible w-8 h-8 flex items-center justify-center rounded-md cursor-pointer bg-red-100 hover:bg-red-200'
         "
       >
         <ng-container *ngIf="!isDeleteConfirming">
