@@ -88,13 +88,6 @@ FastAPI provides automatic interactive API documentation. Once the backend serve
   - Alternative documentation view
   - Better for reading and understanding the API structure
 
-## API Endpoints
-
-- `GET /api/todos` - Get all todos
-- `POST /api/todos` - Create todo
-- `PUT /api/todos/{id}` - Update todo
-- `DELETE /api/todos/{id}` - Delete todo
-
 ## Data Model
 
 Todo Item:
