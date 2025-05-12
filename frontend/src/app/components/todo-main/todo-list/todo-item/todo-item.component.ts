@@ -29,7 +29,6 @@ import {
   CheckboxComponent,
 } from '../../../../shared/components';
 import { DateService } from '../../../../services/date.service';
-import { DatePipe } from '@angular/common';
 
 type TodoItemMode = 'create' | 'edit' | 'display';
 
@@ -42,7 +41,6 @@ type TodoItemMode = 'create' | 'edit' | 'display';
     NgIconComponent,
     ButtonComponent,
     CheckboxComponent,
-    DatePipe,
   ],
   templateUrl: './todo-item.component.html',
   providers: [
