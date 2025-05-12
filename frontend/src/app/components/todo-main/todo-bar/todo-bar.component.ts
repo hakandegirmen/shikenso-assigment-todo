@@ -16,10 +16,10 @@ import { Todo } from '../../../models/todo';
 import {
   FilterCriteria,
   FilterType,
-  SortDirection,
 } from './todo-filter/todo-filter.component';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { heroPlus } from '@ng-icons/heroicons/outline';
+import { SortDirection } from './todo-sort/todo-sort.component';
 
 @Component({
   selector: 'app-todo-bar',
@@ -77,7 +77,7 @@ export class TodoBarComponent {
     this.criteriaChanged.emit(this.criteria);
   }
 
-  onSortChange(sortDirection: 'asc' | 'desc' | 'none') {
+  onSortChange(sortDirection: SortDirection) {
     this.criteria = { ...this.criteria, sortDirection };
     this.criteriaChanged.emit(this.criteria);
   }

@@ -7,9 +7,9 @@ import {
   heroClock,
   heroCheck,
 } from '@ng-icons/heroicons/outline';
+import { SortDirection } from '../todo-sort/todo-sort.component';
 
 export type FilterType = 'all' | 'active' | 'completed';
-export type SortDirection = 'asc' | 'desc' | 'none';
 
 export interface FilterCriteria {
   searchTerm: string;

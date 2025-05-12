@@ -8,6 +8,8 @@ import {
   heroChevronUpDown,
 } from '@ng-icons/heroicons/outline';
 
+export type SortDirection = 'asc' | 'desc' | 'none';
+
 @Component({
   selector: 'app-todo-sort',
   standalone: true,
@@ -22,11 +24,11 @@ import {
   templateUrl: './todo-sort.component.html',
 })
 export class TodoSortComponent {
-  @Output() sortChange = new EventEmitter<'asc' | 'desc' | 'none'>();
-  currentSort: 'asc' | 'desc' | 'none' = 'none';
+  @Output() sortChange = new EventEmitter<SortDirection>();
+  currentSort: SortDirection = 'none';
 
   toggleSort() {
-    const sorts: ('asc' | 'desc' | 'none')[] = ['none', 'asc', 'desc'];
+    const sorts: SortDirection[] = ['none', 'asc', 'desc'];
     const currentIndex = sorts.indexOf(this.currentSort);
     this.currentSort = sorts[(currentIndex + 1) % 3];
     this.sortChange.emit(this.currentSort);
