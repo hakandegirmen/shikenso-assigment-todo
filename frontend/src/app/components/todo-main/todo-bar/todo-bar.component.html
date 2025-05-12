@@ -1,9 +1,9 @@
 <!-- src/app/components/todo-main/todo-bar/todo-bar.component.html -->
 <div class="">
-  <div class="bg-white shadow-sm rounded-t-lg p-4 space-y-4">
+  <div class="bg-light shadow-sm rounded-b-lg p-4 space-y-4">
     <!-- Title -->
     <div class="text-center">
-      <h1 class="text-2xl font-bold text-gray-900">TODO LIST</h1>
+      <h1 class="text-2xl font-bold text-dark">TODO LIST</h1>
     </div>
 
     <!-- Controls Row -->
@@ -18,28 +18,29 @@
           <app-todo-sort (sortChange)="onSortChange($event)"></app-todo-sort>
         </div>
       </div>
-      <div class="w-full md:col-span-1">
+      <div class="w-full h-full md:col-span-1">
         <app-todo-filter
+          class="h-full block"
           (filterChange)="onFilterChange($event)"
         ></app-todo-filter>
       </div>
     </div>
   </div>
   <!-- Add Todo Button Row -->
-  <div class="p-4 pt-0">
+  <div class="pt-0 mt-4">
     <div
-      class="shadow-sm bg-gray-50 hover:bg-gray-100 backdrop-blur-lg rounded-b-lg"
+      class="shadow-sm bg-gray-300/80 border border-dark backdrop-blur-sm hover:bg-primary-light rounded-lg"
     >
-      <div class="flex justify-center">
+      <div class="flex justify-center hover:text-light text-primary">
         <div
           (click)="toggleForm()"
           class="w-full max-w-2xl flex justify-center items-center py-2 cursor-pointer rounded-lg transition-colors group"
         >
-          <div class="flex items-center gap-2 text-blue-500">
+          <div class="flex items-center gap-2">
             <ng-icon
               name="heroPlus"
               [class.rotate-45]="isFormExpanded"
-              class="transition-transform duration-200"
+              class="transition-transform duration-200 font-bold"
               size="32"
             ></ng-icon>
           </div>

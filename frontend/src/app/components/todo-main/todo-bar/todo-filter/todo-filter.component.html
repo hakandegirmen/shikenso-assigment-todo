@@ -1,14 +1,14 @@
 <!-- src/app/components/todo-main/todo-bar/todo-filter/todo-filter.component.html -->
-<div class="flex rounded-lg overflow-hidden border border-gray-200">
+<div class="h-full flex rounded-lg overflow-hidden border border-gray">
   <button
     *ngFor="let filter of filters"
     (click)="setFilter(filter)"
     [ngClass]="[
-      'cursor-pointer flex-1 px-4 py-2 flex items-center justify-center gap-2 hover:bg-blue-600 transition-colors',
+      'cursor-pointer flex-1 px-4 flex items-center justify-center gap-2 hover:bg-primary transition-colors',
       currentFilter === filter
-        ? 'bg-blue-500 text-white'
-        : 'bg-white text-gray-700 hover:text-white',
-      filter === 'active' ? 'border-x border-gray-200' : ''
+        ? 'bg-primary text-light'
+        : 'bg-light text-dark hover:text-light',
+      filter === 'active' ? 'border-x border-gray' : ''
     ]"
   >
     <ng-icon [name]="getIconName(filter)" class="h-5 w-5"></ng-icon>

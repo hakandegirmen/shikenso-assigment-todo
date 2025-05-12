@@ -1,12 +1,26 @@
 @import "tailwindcss";
 
+@theme {
+  /* Main colors */
+  --color-primary: #3b82f6; /* Blue for primary actions */
+  --color-primary-light: #93c5fd; /* Light blue for primary actions */
+  --color-success: #22c55e; /* Green for completed todos */
+  --color-error: #ef4444; /* Red for delete/errors */
+  --color-warning: #f59e0b; /* Amber for warnings/due dates */
+
+  /* Neutral colors */
+  --color-light: #ffffff; /* For backgrounds */
+  --color-dark: #1f2937; /* For text */
+  --color-gray: #9ca3af; /* For secondary text/borders */
+}
+
 /* You can add global styles to this file, and also import other style files */
 html,
 body {
   height: 100%;
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
-  background-color: #f5f5f5;
+  background-color: var(--color-primary);
 }
 
 .container {

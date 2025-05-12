@@ -4,8 +4,8 @@
     [checked]="checked"
     [disabled]="disabled"
     (change)="onChanged($event)"
-    class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
+    class="h-4 w-4 rounded border-gray text-primary focus:ring-primary cursor-pointer"
   />
-  <span *ngIf="label" class="ml-2 text-gray-700">{{ label }}</span>
+  <span *ngIf="label" class="ml-2 text-dark">{{ label }}</span>
   <ng-content></ng-content>
 </label>

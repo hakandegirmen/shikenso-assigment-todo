@@ -1,5 +1,13 @@
 // src/app/components/todo-main/todo-list/todo-item/todo-item.component.ts
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild,
+  ElementRef,
+  HostListener,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
@@ -14,11 +22,13 @@ import {
   heroTrash,
   heroXMark,
   heroCheck,
+  heroCalendar,
 } from '@ng-icons/heroicons/outline';
 import {
   ButtonComponent,
   CheckboxComponent,
 } from '../../../../shared/components';
+import { DateService } from '../../../../services/date.service';
 
 type TodoItemMode = 'create' | 'edit' | 'display';
 
@@ -34,7 +44,13 @@ type TodoItemMode = 'create' | 'edit' | 'display';
   ],
   templateUrl: './todo-item.component.html',
   providers: [
-    provideIcons({ heroPencilSquare, heroTrash, heroXMark, heroCheck }),
+    provideIcons({
+      heroPencilSquare,
+      heroTrash,
+      heroXMark,
+      heroCheck,
+      heroCalendar,
+    }),
   ],
 })
 export class TodoItemComponent {
@@ -49,7 +65,9 @@ export class TodoItemComponent {
   todoForm: FormGroup;
   isDeleteConfirming = false;
 
-  constructor(private fb: FormBuilder) {
+  @ViewChild('dateInput') dateInput!: ElementRef<HTMLInputElement>;
+
+  constructor(private fb: FormBuilder, private dateService: DateService) {
     this.todoForm = this.fb.group({
       title: ['', Validators.required],
       description: [''],
@@ -80,7 +98,6 @@ export class TodoItemComponent {
       this.todoForm.markAsUntouched();
     }
     this.mode = 'display';
-    this.expanded.emit(false);
   }
 
   onStatusChange(checked: boolean) {
@@ -94,6 +111,14 @@ export class TodoItemComponent {
   }
 
   onSubmit() {
+    if (this.mode === 'create' || this.mode === 'edit') {
+      // Mark all fields as touched to trigger validation messages
+      Object.keys(this.todoForm.controls).forEach((key) => {
+        const control = this.todoForm.get(key);
+        control?.markAsTouched();
+      });
+    }
+
     if (this.todoForm.valid) {
       const formValue = this.todoForm.value;
       if (this.mode === 'create') {
@@ -121,6 +146,55 @@ export class TodoItemComponent {
       setTimeout(() => {
         this.isDeleteConfirming = false;
       }, 3000);
+    }
+  }
+
+  get formattedDueDate(): string {
+    // In edit mode, use the form value
+    if (this.mode === 'edit' || this.mode === 'create') {
+      const formDate = this.todoForm.get('due_date')?.value;
+      return this.dateService.formatForDisplay(
+        formDate ? new Date(formDate) : null
+      );
+    }
+    // In display mode, use the todo value
+    return this.dateService.formatForDisplay(
+      this.todo?.due_date ? new Date(this.todo.due_date) : null
+    );
+  }
+
+  showDatePicker() {
+    this.dateInput.nativeElement.showPicker();
+  }
+
+  onCheckboxChange(checked: boolean) {
+    if (this.mode === 'edit') {
+      // In edit mode, update the form and mark it dirty
+      this.todoForm.patchValue({ completed: checked });
+      this.todoForm.markAsDirty();
+    } else {
+      // In display mode, update immediately
+      this.onStatusChange(checked);
+    }
+  }
+
+  cancelDelete(event: Event): void {
+    event.stopPropagation();
+    this.isDeleteConfirming = false;
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    // Only proceed if we're in delete confirming state
+    if (!this.isDeleteConfirming) return;
+
+    // Get the click target as an HTML element
+    const target = event.target as HTMLElement;
+
+    // Check if the click was outside our delete confirmation buttons
+    const isDeleteButton = target.closest('[data-delete-action]');
+    if (!isDeleteButton) {
+      this.isDeleteConfirming = false;
     }
   }
 }
