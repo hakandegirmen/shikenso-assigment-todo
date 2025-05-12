@@ -1,14 +1,17 @@
 <!-- src/app/components/todo-main/todo-list/todo-item/todo-item.component.html -->
 <div
-  class="bg-light shadow-sm mb-2 overflow-hidden group"
-  [class.rounded-lg]="mode !== 'create'"
-  [class.rounded-b-lg]="mode === 'create'"
-  [ngClass]="{ 'bg-gray/80': todo?.completed }"
+  [ngClass]="[
+    'bg-light shadow-sm mb-2 overflow-hidden group',
+    mode !== 'create' ? 'rounded-lg' : 'rounded-b-lg',
+    todo?.completed ? 'bg-gray/80' : ''
+  ]"
 >
   <!-- Header Row (Modified for create mode) -->
   <div
-    class="px-4 py-2 flex items-center space-x-4 hover:bg-gray/5"
-    [class.cursor-pointer]="mode === 'display'"
+    [ngClass]="[
+      'px-4 py-2 flex items-center space-x-4 hover:bg-gray/5',
+      mode === 'display' ? 'cursor-pointer' : ''
+    ]"
     (click)="mode === 'display' && toggleExpand()"
   >
     <div class="flex items-center gap-2">
@@ -31,11 +34,11 @@
         class="flex-grow text-dark truncate max-w-[300px]"
         [class.line-through]="todo?.completed"
       >
-        {{ mode === "create" ? "New TO-DO" : todo?.title }}
+        {{ mode === "create" ? "Create new TO-DO item" : todo?.title }}
       </span>
     </div>
 
-    <div class="ml-auto flex gap-2">
+    <div class="ml-auto flex gap-2 text-white">
       <!-- Save Button -->
       <app-button
         *ngIf="
@@ -45,13 +48,14 @@
         "
         variant="icon"
         (clicked)="onSubmit(); $event.stopPropagation()"
-        [class]="
+        [ngClass]="[
+          'w-8 h-8 flex items-center justify-center rounded-md cursor-pointer bg-success/80 hover:bg-success/90',
           mode === 'create'
-            ? 'visible w-8 h-8 flex items-center justify-center rounded-md cursor-pointer bg-success/10 hover:bg-success/20'
+            ? 'visible'
             : isExpanded
-            ? 'visible w-8 h-8 flex items-center justify-center rounded-md cursor-pointer bg-success/10 hover:bg-success/20'
-            : 'invisible group-hover:visible w-8 h-8 flex items-center justify-center rounded-md cursor-pointer bg-success/10 hover:bg-success/20'
-        "
+            ? 'visible'
+            : 'invisible group-hover:visible'
+        ]"
       >
         <ng-icon name="heroCheck" size="24" class="text-success"></ng-icon>
       </app-button>
@@ -63,16 +67,16 @@
         (clicked)="
           mode === 'edit' ? cancelEdit() : startEdit(); $event.stopPropagation()
         "
-        [class]="
-          isExpanded
-            ? 'visible w-8 h-8 flex items-center justify-center rounded-md cursor-pointer bg-primary/10 hover:bg-primary/20'
-            : 'invisible group-hover:visible w-8 h-8 flex items-center justify-center rounded-md cursor-pointer bg-primary/10 hover:bg-primary/20'
-        "
+        [ngClass]="[
+          'w-8 h-8 flex items-center justify-center rounded-md cursor-pointer',
+          'bg-primary/80 hover:bg-primary/90',
+          isExpanded ? 'visible' : 'invisible group-hover:visible'
+        ]"
       >
         <ng-icon
           [name]="mode === 'edit' ? 'heroXMark' : 'heroPencilSquare'"
           size="24"
-          [class]="mode === 'edit' ? 'text-error' : 'text-primary'"
+          [ngClass]="mode === 'edit' ? 'text-error' : 'text-primary'"
         ></ng-icon>
       </app-button>
 
@@ -84,7 +88,7 @@
           variant="icon"
           data-delete-action
           (clicked)="cancelDelete($event)"
-          class="visible w-16 h-8 flex items-center justify-center rounded-md cursor-pointer bg-success/10 hover:bg-success/20"
+          class="visible w-16 h-8 flex items-center justify-center rounded-md cursor-pointer bg-success/80 hover:bg-success/90"
         >
           <span class="text-sm font-medium text-success whitespace-nowrap">
             KEEP
@@ -96,13 +100,13 @@
           variant="icon"
           data-delete-action
           (clicked)="onDeleteClick($event)"
-          [class]="
+          [ngClass]="[
+            'flex items-center justify-center rounded-md cursor-pointer bg-error/80 hover:bg-error/90',
+            isDeleteConfirming ? 'visible w-20 h-8' : 'w-8 h-8',
             isExpanded || isDeleteConfirming
-              ? isDeleteConfirming
-                ? 'visible w-20 h-8 flex items-center justify-center rounded-md cursor-pointer bg-error/10 hover:bg-error/20'
-                : 'visible w-8 h-8 flex items-center justify-center rounded-md cursor-pointer bg-error/10 hover:bg-error/20'
-              : 'invisible group-hover:visible w-8 h-8 flex items-center justify-center rounded-md cursor-pointer bg-error/10 hover:bg-error/20'
-          "
+              ? 'visible'
+              : 'invisible group-hover:visible'
+          ]"
         >
           <ng-container *ngIf="!isDeleteConfirming">
             <ng-icon name="heroTrash" size="24" class="text-error"></ng-icon>
