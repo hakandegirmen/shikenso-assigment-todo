@@ -1,56 +1,57 @@
 <!-- src/app/components/todo-main/todo-bar/todo-bar.component.html -->
-<div class="bg-white shadow-sm rounded-lg p-4 space-y-4">
-  <!-- Title -->
-  <div class="text-center">
-    <h1 class="text-2xl font-bold text-gray-900">TODO LIST</h1>
-  </div>
-
-  <!-- Controls Row -->
-  <div class="flex flex-col md:grid md:grid-cols-3 gap-4">
-    <div class="flex gap-4 md:col-span-2">
-      <div class="flex-grow">
-        <app-todo-search
-          (searchChange)="onSearchChange($event)"
-        ></app-todo-search>
-      </div>
-      <div class="flex-shrink-0">
-        <app-todo-sort (sortChange)="onSortChange($event)"></app-todo-sort>
-      </div>
+<div class="">
+  <div class="bg-white shadow-sm rounded-t-lg p-4 space-y-4">
+    <!-- Title -->
+    <div class="text-center">
+      <h1 class="text-2xl font-bold text-gray-900">TODO LIST</h1>
     </div>
-    <div class="md:col-span-1 flex align-middle items-center">
-      <app-todo-filter
-        (filterChange)="onFilterChange($event)"
-      ></app-todo-filter>
-    </div>
-  </div>
 
-  <!-- Add Todo Button Row -->
-</div>
-<div class="p-4 pt-0 mt-1">
-  <div class="bg-blue-500 hover:bg-blue-600 shadow-sm rounded-b-lg">
-    <div class="flex justify-center">
-      <div
-        (click)="toggleForm()"
-        class="w-full max-w-2xl flex justify-center items-center py-2 cursor-pointer rounded-lg transition-colors group"
-      >
-        <div class="flex items-center gap-2 text-white">
-          <ng-icon
-            name="heroPlus"
-            [class.rotate-45]="isFormExpanded"
-            class="transition-transform duration-200"
-            size="32"
-          ></ng-icon>
+    <!-- Controls Row -->
+    <div class="flex flex-col md:grid md:grid-cols-3 gap-4">
+      <div class="flex gap-4 md:col-span-2">
+        <div class="flex-grow">
+          <app-todo-search
+            (searchChange)="onSearchChange($event)"
+          ></app-todo-search>
+        </div>
+        <div class="flex-shrink-0">
+          <app-todo-sort (sortChange)="onSortChange($event)"></app-todo-sort>
         </div>
       </div>
+      <div class="w-full md:col-span-1">
+        <app-todo-filter
+          (filterChange)="onFilterChange($event)"
+        ></app-todo-filter>
+      </div>
     </div>
-    <!-- Create Todo Form -->
-    <div
-      *ngIf="isFormExpanded"
-      class="transition-all duration-200 ease-in-out"
-      [@expandCollapse]="isFormExpanded ? 'expanded' : 'collapsed'"
-    >
-      <app-todo-item mode="create" (todoCreated)="onTodoSubmitted($event)">
-      </app-todo-item>
+  </div>
+  <!-- Add Todo Button Row -->
+  <div class="p-4 pt-0">
+    <div class="shadow-sm bg-gray-50 hover:bg-gray-100 rounded-b-lg">
+      <div class="flex justify-center">
+        <div
+          (click)="toggleForm()"
+          class="w-full max-w-2xl flex justify-center items-center py-2 cursor-pointer rounded-lg transition-colors group"
+        >
+          <div class="flex items-center gap-2 text-blue-500">
+            <ng-icon
+              name="heroPlus"
+              [class.rotate-45]="isFormExpanded"
+              class="transition-transform duration-200"
+              size="32"
+            ></ng-icon>
+          </div>
+        </div>
+      </div>
+      <!-- Create Todo Form -->
+      <div
+        *ngIf="isFormExpanded"
+        class="transition-all duration-200 ease-in-out"
+        [@expandCollapse]="isFormExpanded ? 'expanded' : 'collapsed'"
+      >
+        <app-todo-item mode="create" (todoCreated)="onTodoSubmitted($event)">
+        </app-todo-item>
+      </div>
     </div>
   </div>
 </div>

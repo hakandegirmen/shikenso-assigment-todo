@@ -16,6 +16,12 @@ export class TodoListComponent {
   @Output() todoUpdated = new EventEmitter<Todo>();
   @Output() todoDeleted = new EventEmitter<number>();
 
+  expandedTodoId: number | null = null;
+
+  onTodoExpanded(todoId: number | null) {
+    this.expandedTodoId = todoId;
+  }
+
   onTodoUpdated(todo: Todo) {
     this.todoUpdated.emit(todo);
   }

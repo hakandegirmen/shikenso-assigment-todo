@@ -9,11 +9,18 @@ import {
 } from '@angular/forms';
 import { Todo } from '../../../../models/todo';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
-import { heroPencilSquare } from '@ng-icons/heroicons/outline';
+import {
+  heroPencilSquare,
+  heroTrash,
+  heroXMark,
+  heroCheck,
+} from '@ng-icons/heroicons/outline';
 import {
   ButtonComponent,
   CheckboxComponent,
 } from '../../../../shared/components';
+
+type TodoItemMode = 'create' | 'edit' | 'display';
 
 @Component({
   selector: 'app-todo-item',
@@ -26,17 +33,21 @@ import {
     CheckboxComponent,
   ],
   templateUrl: './todo-item.component.html',
-  providers: [provideIcons({ heroPencilSquare })],
+  providers: [
+    provideIcons({ heroPencilSquare, heroTrash, heroXMark, heroCheck }),
+  ],
 })
 export class TodoItemComponent {
   @Input() todo?: Todo;
-  @Input() mode: 'create' | 'edit' | 'display' = 'display';
+  @Input() mode: TodoItemMode = 'display';
+  @Input() isExpanded = false;
   @Output() todoCreated = new EventEmitter<Todo>();
   @Output() todoUpdated = new EventEmitter<Todo>();
   @Output() todoDeleted = new EventEmitter<number>();
+  @Output() expanded = new EventEmitter<boolean>();
 
   todoForm: FormGroup;
-  isExpanded = false;
+  isDeleteConfirming = false;
 
   constructor(private fb: FormBuilder) {
     this.todoForm = this.fb.group({
@@ -54,12 +65,22 @@ export class TodoItemComponent {
   }
 
   toggleExpand() {
-    this.isExpanded = !this.isExpanded;
+    this.expanded.emit(!this.isExpanded);
   }
 
   startEdit() {
     this.mode = 'edit';
-    this.isExpanded = true;
+    this.expanded.emit(true);
+  }
+
+  cancelEdit() {
+    if (this.todo) {
+      this.todoForm.patchValue(this.todo);
+      this.todoForm.markAsPristine();
+      this.todoForm.markAsUntouched();
+    }
+    this.mode = 'display';
+    this.expanded.emit(false);
   }
 
   onStatusChange(checked: boolean) {
@@ -86,6 +107,20 @@ export class TodoItemComponent {
   onDelete() {
     if (this.todo?.id) {
       this.todoDeleted.emit(this.todo.id);
+    }
+  }
+
+  onDeleteClick(event: Event) {
+    event.stopPropagation();
+    if (this.isDeleteConfirming) {
+      this.onDelete();
+      this.isDeleteConfirming = false;
+    } else {
+      this.isDeleteConfirming = true;
+      // Auto-reset after 3 seconds if not clicked
+      setTimeout(() => {
+        this.isDeleteConfirming = false;
+      }, 3000);
     }
   }
 }

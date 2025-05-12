@@ -5,9 +5,11 @@
     <app-todo-item
       *ngFor="let todo of todos"
       [todo]="todo"
+      [isExpanded]="todo.id === expandedTodoId"
       mode="display"
       (todoUpdated)="onTodoUpdated($event)"
       (todoDeleted)="onTodoDeleted($event)"
+      (expanded)="onTodoExpanded($event ? todo.id ?? null : null)"
       class="block"
     >
     </app-todo-item>

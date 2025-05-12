@@ -4,37 +4,86 @@
   [class.border-l-4]="todo?.completed"
   [class.border-green-500]="todo?.completed"
 >
-  <!-- Display Mode Header -->
+  <!-- Header Row (Modified for create mode) -->
   <div
-    *ngIf="mode === 'display'"
-    class="p-4 flex items-center space-x-4 hover:bg-gray-50 cursor-pointer"
-    (click)="toggleExpand()"
+    class="px-4 py-2 flex items-center space-x-4 hover:bg-gray-50"
+    [class.cursor-pointer]="mode === 'display'"
+    (click)="mode === 'display' && toggleExpand()"
   >
     <div class="flex items-center gap-2">
+      <!-- Checkbox (hidden in create mode) -->
       <app-checkbox
+        *ngIf="mode !== 'create'"
         [checked]="todo?.completed || false"
         (checkedChange)="onStatusChange($event)"
         (click)="$event.stopPropagation()"
+        [disabled]="mode !== 'display'"
       />
+      <!-- Placeholder for checkbox spacing in create mode -->
+      <div *ngIf="mode === 'create'" class="w-5"></div>
+
       <span
         class="flex-grow text-gray-900"
         [class.line-through]="todo?.completed"
       >
-        {{ todo?.title }}
+        {{ mode === "create" ? "New TO-DO" : todo?.title }}
       </span>
     </div>
 
-    <div class="ml-auto">
+    <div class="ml-auto flex gap-2">
+      <!-- Save Button -->
+      <app-button
+        *ngIf="(mode === 'create' || mode === 'edit') && todoForm.dirty"
+        variant="icon"
+        (clicked)="onSubmit(); $event.stopPropagation()"
+        [disabled]="!todoForm.valid"
+        [class]="
+          isExpanded
+            ? 'visible bg-green-100 hover:bg-green-200'
+            : 'invisible group-hover:visible bg-green-100 hover:bg-green-200'
+        "
+      >
+        <ng-icon name="heroCheck" size="24" class="text-green-700"></ng-icon>
+      </app-button>
+
+      <!-- Edit/Cancel Button -->
       <app-button
         variant="icon"
-        iconSize="lg"
-        (clicked)="startEdit(); $event.stopPropagation()"
-        class="invisible group-hover:visible"
+        (clicked)="
+          mode === 'edit' ? cancelEdit() : startEdit(); $event.stopPropagation()
+        "
+        [class]="
+          isExpanded
+            ? 'visible bg-blue-100 hover:bg-blue-200'
+            : 'invisible group-hover:visible bg-blue-100 hover:bg-blue-200'
+        "
       >
         <ng-icon
-          name="heroPencilSquare"
-          class="h-6 w-6 text-gray-600 hover:text-blue-600"
+          [name]="mode === 'edit' ? 'heroXMark' : 'heroPencilSquare'"
+          size="24"
+          [class]="mode === 'edit' ? 'text-red-700' : 'text-blue-700'"
         ></ng-icon>
+      </app-button>
+
+      <!-- Delete Button -->
+      <app-button
+        variant="icon"
+        (clicked)="onDeleteClick($event)"
+        [class]="
+          isExpanded
+            ? 'visible bg-red-100 hover:bg-red-200'
+            : 'invisible group-hover:visible bg-red-100 hover:bg-red-200'
+        "
+      >
+        <ng-container *ngIf="!isDeleteConfirming">
+          <ng-icon name="heroTrash" size="24" class="text-red-700"></ng-icon>
+        </ng-container>
+        <span
+          *ngIf="isDeleteConfirming"
+          class="text-sm font-medium text-red-700"
+        >
+          delete?
+        </span>
       </app-button>
     </div>
   </div>
@@ -56,7 +105,7 @@
         class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
       />
       <p
-        *ngIf="todoForm.get('title')?.errors?.['required']"
+        *ngIf="todoForm.get('title')?.errors?.['required'] && todoForm.get('title')?.touched"
         class="text-red-500 text-sm"
       >
         Title is required
@@ -84,20 +133,6 @@
         [readonly]="mode === 'display'"
         class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
       />
-    </div>
-
-    <!-- Action Buttons -->
-    <div class="flex justify-end space-x-2 pt-4">
-      <app-button
-        *ngIf="mode === 'edit'"
-        variant="danger"
-        (clicked)="onDelete()"
-      >
-        Delete
-      </app-button>
-      <app-button variant="primary" type="submit" [disabled]="!todoForm.valid">
-        {{ mode === "create" ? "Add" : "Save" }}
-      </app-button>
     </div>
   </form>
 </div>
