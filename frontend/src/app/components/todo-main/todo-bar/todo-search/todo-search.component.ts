@@ -13,8 +13,7 @@ export class TodoSearchComponent {
   @Output() searchChange = new EventEmitter<string>();
   searchTerm = '';
 
-  onSearch(event: Event) {
-    const value = (event.target as HTMLInputElement).value;
+  onSearch(value: string) {
     this.searchTerm = value;
     this.searchChange.emit(value);
   }

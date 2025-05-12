@@ -8,7 +8,8 @@
 
     <!-- Controls Row -->
     <div class="flex flex-col md:grid md:grid-cols-3 gap-4">
-      <div class="flex gap-4 md:col-span-2">
+      <!-- Search and Sort Container -->
+      <div class="flex gap-4 md:col-span-2 h-[42px]">
         <div class="flex-grow">
           <app-todo-search
             (searchChange)="onSearchChange($event)"
@@ -18,7 +19,8 @@
           <app-todo-sort (sortChange)="onSortChange($event)"></app-todo-sort>
         </div>
       </div>
-      <div class="w-full h-full md:col-span-1">
+      <!-- Filter Container -->
+      <div class="w-full h-[42px] md:col-span-1">
         <app-todo-filter
           class="h-full block"
           (filterChange)="onFilterChange($event)"

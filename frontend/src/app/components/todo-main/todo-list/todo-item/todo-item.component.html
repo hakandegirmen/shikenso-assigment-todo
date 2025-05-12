@@ -27,7 +27,10 @@
       <!-- Placeholder for checkbox spacing in create mode -->
       <div *ngIf="mode === 'create'" class="w-5"></div>
 
-      <span class="flex-grow text-dark" [class.line-through]="todo?.completed">
+      <span
+        class="flex-grow text-dark truncate max-w-[300px]"
+        [class.line-through]="todo?.completed"
+      >
         {{ mode === "create" ? "New TO-DO" : todo?.title }}
       </span>
     </div>

@@ -83,6 +83,7 @@ export class TodoMainComponent implements OnInit {
 
     // Apply sorting
     if (this.currentCriteria.sortDirection !== 'none') {
+      // Sort by due date if sort direction is specified
       filtered = [...filtered].sort((a, b) => {
         if (!a.due_date) return 1;
         if (!b.due_date) return -1;
@@ -91,6 +92,12 @@ export class TodoMainComponent implements OnInit {
         return this.currentCriteria.sortDirection === 'asc'
           ? dateA.getTime() - dateB.getTime()
           : dateB.getTime() - dateA.getTime();
+      });
+    } else {
+      // When no sort direction is specified, sort by completion status (active first)
+      filtered = [...filtered].sort((a, b) => {
+        if (a.completed === b.completed) return 0;
+        return a.completed ? 1 : -1; // Active (not completed) items come first
       });
     }
 
