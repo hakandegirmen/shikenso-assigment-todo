@@ -9,7 +9,7 @@ import { environment } from '../../environments/environment';
   providedIn: 'root',
 })
 export class TodoService {
-  private apiUrl = `${environment.apiUrl}/todos`;
+  private apiUrl = `${environment.apiUrl}/todos/`;
 
   constructor(private http: HttpClient, private dateService: DateService) {}
 
@@ -35,10 +35,10 @@ export class TodoService {
       ...todo,
       due_date: this.dateService.toApiString(todo.due_date as Date),
     };
-    return this.http.put<Todo>(`${this.apiUrl}/${id}`, todoToSend);
+    return this.http.put<Todo>(`${this.apiUrl}${id}`, todoToSend);
   }
 
   deleteTodo(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    return this.http.delete<void>(`${this.apiUrl}${id}`);
   }
 }
