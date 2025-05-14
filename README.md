@@ -90,7 +90,7 @@ source venv/bin/activate
 
 ```bash
 pip install -r requirements.txt
-uvicorn main:app --reload
+uvicorn app.main:app --reload
 ```
 
 Backend will run at `http://localhost:8000`
